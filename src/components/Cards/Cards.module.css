@@ -11,6 +11,7 @@
   flex-direction: row;
   gap: 10px;
   flex-wrap: wrap;
+  margin-bottom: 30px;
 }
 
 .modalContainer {
@@ -69,4 +70,29 @@
   line-height: 32px;
 
   margin-bottom: -12px;
+}
+
+.attempts {
+  padding-top: 40px;
+  color: #fff;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: StratosSkyeng;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.footerEasy {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.footerCard {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  /* align-items: baseline; */
 }
