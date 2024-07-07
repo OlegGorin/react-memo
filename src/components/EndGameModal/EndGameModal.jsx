@@ -6,18 +6,41 @@ import { Button } from "../Button/Button";
 
 import deadImageUrl from "./images/dead.png";
 import celebrationImageUrl from "./images/celebration.png";
+import { useState } from "react";
+import { postLeader } from "../../api";
 
 export function EndGameModal({ isWon, isLeader, gameDurationSeconds, gameDurationMinutes, onClick }) {
+  const { user, setUser } = useUser();
+  const [setError] = useState(null);
+
   const title = isWon ? (isLeader ? "Вы попали на Лидерборд!" : "Вы победили!") : "Вы проиграли!";
 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
 
   const imgAlt = isWon ? "celebration emodji" : "dead emodji";
 
-  const { user, setUser } = useUser();
-
   const onInputName = event => {
     setUser(event.target.value);
+  };
+
+  const postUserLeaderboard = async () => {
+    if (user.trim() === "") {
+      alert("Введите имя пользователя");
+    } else {
+      document.getElementById("nameSave").disabled = true;
+      document.getElementById("nameSave").style.backgroundColor = "#27cece";
+      document.getElementById("nameSave").style.cursor = "not-allowed";
+      const timeUser = gameDurationMinutes * 60 + gameDurationSeconds;
+      try {
+        return postLeader({ user, timeUser });
+      } catch (error) {
+        console.error(error.message);
+        if (error.message === "Failed to fetch") {
+          setError("Ошибка соединения");
+          return;
+        }
+      }
+    }
   };
 
   return (
@@ -26,14 +49,19 @@ export function EndGameModal({ isWon, isLeader, gameDurationSeconds, gameDuratio
         <div className={styles.modalLeader}>
           <img className={styles.image} src={imgSrc} alt={imgAlt} />
           <h2 className={styles.title}>{title}</h2>
-          <input
-            className={styles.userName}
-            type="text"
-            placeholder="Пользователь"
-            value={user}
-            onChange={onInputName}
-            autoFocus=""
-          />
+          <div className={styles.modalUser}>
+            <input
+              className={styles.userName}
+              type="text"
+              placeholder="Пользователь"
+              value={user}
+              onChange={onInputName}
+              autoFocus=""
+            />
+            <button className={styles.nameSave} id="nameSave" onClick={postUserLeaderboard}>
+              Сохранить
+            </button>
+          </div>
           <p className={styles.description}>Затраченное время:</p>
           <div className={styles.time}>
             {gameDurationMinutes.toString().padStart("2", "0")}.{gameDurationSeconds.toString().padStart("2", "0")}

@@ -35,3 +35,19 @@ ol {
   font-weight: 400;
   font-style: normal;
 }
+@font-face {
+  font-family: "Poppins";
+  src:
+    url("../public/assets/fonts/Poppins.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Montserrat1";
+  src:
+    url("../public/assets/fonts/Montserrat1.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}

@@ -41,7 +41,7 @@ export const LeaderboardPage = () => {
         <div className={styles.header}>
           <span className={styles.title}>Лидерборд</span>
           <Link to="/">
-            <Button>Начать игру</Button>
+            <Button className={styles.title}>Начать игру</Button>
           </Link>
         </div>
         <div className={styles.table}>
