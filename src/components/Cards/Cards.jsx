@@ -122,7 +122,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     if (isPlayerWon) {
       // Если выполняются условие: 3-й уровень сложности
       // предоставляется возможность записи результата в лидерборд
-      if (selectedLevel === 3) {
+      if (selectedLevel === 9) {
         setIsLeader(true);
       }
       finishGame(STATUS_WON);
