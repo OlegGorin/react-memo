@@ -12,6 +12,7 @@ import { postLeader } from "../../api";
 export function EndGameModal({ isWon, isLeader, gameDurationSeconds, gameDurationMinutes, onClick }) {
   const { user, setUser } = useUser();
   const [setError] = useState(null);
+  const [stateBtn, setStateBtn] = useState(true);
 
   const title = isWon ? (isLeader ? "Вы попали на Лидерборд!" : "Вы победили!") : "Вы проиграли!";
 
@@ -27,9 +28,8 @@ export function EndGameModal({ isWon, isLeader, gameDurationSeconds, gameDuratio
     if (user.trim() === "") {
       alert("Введите имя пользователя");
     } else {
-      document.getElementById("nameSave").disabled = true;
-      document.getElementById("nameSave").style.backgroundColor = "#27cece";
-      document.getElementById("nameSave").style.cursor = "not-allowed";
+      setStateBtn(prev => !prev);
+
       const timeUser = gameDurationMinutes * 60 + gameDurationSeconds;
       try {
         return postLeader({ user, timeUser });
@@ -58,7 +58,11 @@ export function EndGameModal({ isWon, isLeader, gameDurationSeconds, gameDuratio
               onChange={onInputName}
               autoFocus=""
             />
-            <button className={styles.nameSave} id="nameSave" onClick={postUserLeaderboard}>
+            <button
+              className={`${stateBtn ? styles.nameSave : styles.newNameSave}`}
+              disabled={!stateBtn}
+              onClick={postUserLeaderboard}
+            >
               Сохранить
             </button>
           </div>
