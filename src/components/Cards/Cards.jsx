@@ -7,8 +7,7 @@ import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { useEasyMode } from "../../contexts/easyModeContext/UseEasyMode";
 import { useUser } from "../../contexts/userContext/UseUser";
-import eyeIcon from "../../icons/eye.svg";
-import force2Icon from "../../icons/force2.svg";
+import cardsIcon from "../../icons/force2.svg";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -46,9 +45,7 @@ function getTimerValue(startDate, endDate) {
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [isLeader, setIsLeader] = useState(false);
-  // const [setError] = useState(null);
-  const { isEasyMode, selectedLevel } = useEasyMode();
-  // const { setLeaders } = useLeaders();
+  const { isEasyMode, selectedLevel, setSelectedLevel, forceCards, setForceCards } = useEasyMode();
   const { setUser } = useUser();
   // Если игорок выбирает легкий уровень с 3 попытками, в attempts организован счетчик этих попыток
   const [attempts, setAttempts] = useState(isEasyMode ? 3 : 1);
@@ -88,7 +85,33 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     if (isEasyMode) {
       setAttempts(3);
     }
+    setForceCards(2);
+    setSelectedLevel(null);
   }
+
+  const handleForceCards = () => {
+    const closedCards = cards.filter(card => !card.open);
+    const lenClosedCards = closedCards.length;
+    if (forceCards > 0 && lenClosedCards > 1) {
+      setForceCards(prev => prev - 1);
+      const randomIndex = Math.floor(Math.random() * (lenClosedCards - 1));
+      const candidate = closedCards[randomIndex];
+      const forcedCards = closedCards.filter(
+        closedCard => closedCard.rank === candidate.rank && closedCard.suit === candidate.suit,
+      );
+      for (let i = 0; i <= forcedCards.length - 1; i++) {
+        forcedCards[i].open = true;
+      }
+      if (lenClosedCards === 2) {
+        if (selectedLevel === 9) {
+          setIsLeader(true);
+        }
+        finishGame(STATUS_WON);
+      }
+    } else {
+      alert("Неоткрытых карт должно быть не менее двух!");
+    }
+  };
 
   /**
    * Обработка основного действия в игре - открытие карты.
@@ -120,12 +143,10 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // Победа - все карты на поле открыты
     if (isPlayerWon) {
-      // Если выполняются условие: 3-й уровень сложности
-      // предоставляется возможность записи результата в лидерборд
       if (selectedLevel === 9) {
         setIsLeader(true);
       }
-      finishGame(STATUS_WON);
+      setTimeout(finishGame(STATUS_WON), 1000);
       setUser("Пользователь");
       return;
     }
@@ -246,11 +267,36 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        <div>
-          <img src={eyeIcon} className={styles.achievement} alt="eye" />
-        </div>
-        <div>
-          <img src={force2Icon} className={styles.achievement} alt="force" />
+        <div className={styles.forcesBox}>
+          <div className={styles.tooltip2}>
+            <span className={styles.tooltiptext2}>
+              <b>Алохомора</b>
+              {/* <br></br> */}
+              <br></br>
+              <p>
+                Открывается случайная пара<br></br> карт.
+              </p>
+            </span>
+            {forceCards > 0 ? (
+              <img
+                src={cardsIcon}
+                className={styles.forceCards}
+                alt="cards"
+                onClick={handleForceCards}
+                disabled={forceCards === 0}
+              />
+            ) : (
+              <img
+                src={cardsIcon}
+                className={styles.forceCardsOff}
+                alt="cards"
+                onClick={handleForceCards}
+                disabled={forceCards === 0}
+              />
+            )}
+            <div className={styles.iconCards}></div>
+            <div className={styles.countCards}>{forceCards}</div>
+          </div>
         </div>
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>

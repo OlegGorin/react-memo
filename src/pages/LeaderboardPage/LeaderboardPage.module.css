@@ -27,6 +27,7 @@
   margin-top: 52px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .table {
@@ -36,20 +37,34 @@
   gap: 15px;
 }
 
-.tableHeader,
-.tableBody {
-  width: 904px;
-  height: 64px;
+.boxTitle,
+.boxContent {
+  width: 889px;
+  height: 32px;
   display: flex;
   flex-direction: row;
+  color: #999999;
+  justify-content: left;
+  align-items: center;
+  padding-top: 16px;
+  margin-left: 20px;
+ }
+
+ .boxTitle {
   gap: 66px;
+ }
+
+ .boxContent {
+  color: #000;
+ }
+
+.tableHeader,
+.tableBody {
+  width: 944px;
+  height: 64px;
   border-radius: 12px;
   background-color: #fff;
-  color: #999999;
   opacity: 0px;
-  align-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
 .tableBody {
@@ -58,7 +73,28 @@
 .userPosition,
 .userName,
 .userTime,
-.emptySpace {
+.userAchievements {
+  font-family: Montserrat1;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: left;
+  margin-right: 66px;
+}
+
+.userName {
+  margin-right: 3px;
+  width: 290px;
+}
+
+.userTime {
+  margin-right: 0;
+}
+
+.position,
+.name,
+.time,
+.achievements {
   font-family: Montserrat1;
   font-size: 24px;
   font-weight: 400;
@@ -66,42 +102,89 @@
   text-align: left;
 }
 
+.position,
 .userPosition {
   width: 178px;
 }
 
-.userName {
-  width: 324px;
+.name {
+  width: 227px;
 }
 
+.time,
 .userTime {
-  width: 102px;
+  width: 92px;
+}
+
+.achievements,
+.userAchievements {
+  width: 194px;
 }
 
 .emptySpace {
-  width: 102px;
+  width: 122px;
+  margin-left: 66px;
 }
 
-/* .buttonStart {
-  width: 246px;
-  height: 50px;
-  text-decoration: none;
-  background-color: #7ac100;
-  border-radius: 12px;
-  border: "0.7px solid var(--palette-navy-60, #5a6b3e)";
-  outline: none;
+.boxAchievement {
+  width: 32px;
+}
+
+.blockAchiev {
+  width: 70px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: StratosSkyeng;
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 400;
-  letter-spacing: -0.14px;
-  color: #fff;
-  cursor: pointer;
+  flex-direction: row;
 }
 
-.buttonStart:hover {
-  background: #7ac100cc;
-} */
+.spaceAchiev {
+  width: 6px;
+}
+
+.tooltip,
+.tooltip2 {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext,
+.tooltip2 .tooltiptext2 {
+  visibility: hidden;
+  width: 212px;
+  height: auto;
+  background-color: #C2F5FF;
+  color: #004980;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: Inter2;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 12px;
+  padding: 10px 0;
+
+  /* Разместите всплывающую подсказку */
+  position: absolute;
+  bottom: 40px;
+  z-index: 1;
+}
+
+.tooltip2 .tooltiptext2 {
+  width: 187px;
+}
+
+.tooltip:hover .tooltiptext,
+.tooltip2:hover .tooltiptext2 {
+  visibility: visible;
+}
+
+.tooltip .tooltiptext::after,
+.tooltip2 .tooltiptext2::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #C2F5FF transparent transparent transparent;
+}

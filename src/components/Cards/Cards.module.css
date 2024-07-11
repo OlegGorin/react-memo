@@ -98,3 +98,129 @@
 .achievement {
   display: none;
 }
+
+.tooltip,
+.tooltip2 {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext,
+.tooltip2 .tooltiptext2 {
+  visibility: hidden;
+  width: 222px;
+  height: auto;
+  background-color: #C2F5FF;
+  color: #004980;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: Inter2;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 12px;
+  padding: 10px 0;
+
+  /* Разместите всплывающую подсказку */
+  position: absolute;
+  top: 80px;
+  left: -80px;
+  z-index: 1;
+}
+
+.tooltip2 .tooltiptext2 {
+  width: 187px;
+  left: -60px;
+}
+
+.tooltip:hover .tooltiptext,
+.tooltip2:hover .tooltiptext2 {
+  visibility: visible;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext::after,
+.tooltip2 .tooltiptext2::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #C2F5FF transparent;
+}
+
+.forcesBox {
+  width: 151px;
+  height: 68px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px
+  ;
+}
+
+.forceEye,
+.forceCards {
+  opacity: 1.0;
+}
+.forceEyeOff,
+.forceCardsOff {
+  opacity: 0.6;
+}
+
+.forceEye {
+  display: none;
+}
+
+.iconEye {  
+  background-color: rgba(223, 120, 25, 1.0);
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  top: 40px;
+  left: 45px;
+  border-radius: 50%;
+}
+
+.iconEye {
+  display: none;
+}
+
+.countEye {
+  color: #fff;
+  position: absolute;
+  top: 45px;
+  left: 54px;
+  font-family: StratosSkyeng;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.countEye {
+  display: none;
+}
+
+.iconCards {
+  background-color: rgba(223, 120, 25, 1.0);
+  height: 25px;
+  width: 25px;
+  position: relative;
+  top: -34px;
+  left: 45px;
+  border-radius: 50%;
+}
+
+.countCards {
+  color: #fff;
+  position: relative;
+  top: -53px;
+  left: 54px;
+  font-family: StratosSkyeng;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px;
+}

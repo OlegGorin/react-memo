@@ -4,9 +4,13 @@ import { useLeaders } from "../../contexts/leaderContext/UseLeaders";
 import { getLeaders } from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
+import achiev1 from "../../icons/achievement1.svg";
+import achiev2 from "../../icons/achievement2.svg";
+import { useEasyMode } from "../../contexts/easyModeContext/UseEasyMode";
 
 export const LeaderboardPage = () => {
   const { leaders, setLeaders } = useLeaders();
+  const { setIsEasyMode, setForceEye, setForceCards } = useEasyMode();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,29 +39,72 @@ export const LeaderboardPage = () => {
     return viewedTime;
   }
 
+  const handleStartGame = () => {
+    setIsEasyMode(false);
+    setForceEye(1);
+    setForceCards(2);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.header}>
           <span className={styles.title}>Лидерборд</span>
           <Link to="/">
-            <Button className={styles.title}>Начать игру</Button>
+            <Button className={styles.title} onClick={handleStartGame}>
+              Начать игру
+            </Button>
           </Link>
         </div>
         <div className={styles.table}>
           <div className={styles.tableHeader}>
-            <span className={styles.userPosition}>Позиция</span>
-            <span className={styles.userName}>Пользователь</span>
-            <span className={styles.emptySpace}></span>
-            <span className={styles.userTime}>Время</span>
+            <div className={styles.boxTitle}>
+              <div className={styles.position}>
+                <span>Позиция</span>
+              </div>
+              <div className={styles.name}>
+                <span>Пользователь</span>
+              </div>
+              <div className={styles.achievements}>
+                <span>Достижения</span>
+              </div>
+              <div className={styles.time}>
+                <span>Время</span>
+              </div>
+            </div>
           </div>
           {leaders.map((sortLeader, index) => {
             return (
               <div key={index} className={styles.tableBody}>
-                <span className={styles.userPosition}># {index + 1}</span>
-                <span className={styles.userName}>{sortLeader.name}</span>
-                <span className={styles.emptySpace}></span>
-                <span className={styles.userTime}>{getTimeViewer(sortLeader.time)}</span>
+                <div className={styles.boxContent}>
+                  <div className={styles.userPosition}>
+                    <span># {index + 1}</span>
+                  </div>
+                  <div className={styles.userName}>
+                    <span>{sortLeader.name}</span>
+                  </div>
+                  <div className={styles.blockAchiev}>
+                    <div className={styles.boxAchievement}>
+                      <div className={styles.tooltip}>
+                        <span className={styles.tooltiptext}>Игра пройдена в сложном режиме</span>
+                        {sortLeader.achievements.includes(1) && <img src={achiev1} alt="achiev1" />}
+                      </div>
+                    </div>
+                    <div className={styles.spaceAchiv}></div>
+                    <div className={styles.boxAchievement}>
+                      <div className={styles.tooltip2}>
+                        <span className={styles.tooltiptext2}>
+                          Игра пройдена<br></br>без супер-сил
+                        </span>
+                        {sortLeader.achievements.includes(2) && <img src={achiev2} alt="achiev2" />}
+                      </div>
+                    </div>
+                  </div>
+                  <span className={styles.emptySpace}></span>
+                  <div className={styles.userTime}>
+                    <span>{getTimeViewer(sortLeader.time)}</span>
+                  </div>
+                </div>
               </div>
             );
           })}

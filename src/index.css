@@ -51,3 +51,59 @@ ol {
   font-weight: 400;
   font-style: normal;
 }
+@font-face {
+  font-family: "Inter1";
+  src:
+    url("../public/assets/fonts/Inter1.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Inter2";
+  src:
+    url("../public/assets/fonts/Inter2.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Inter3";
+  src:
+    url("../public/assets/fonts/Inter3.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Inter4";
+  src:
+    url("../public/assets/fonts/Inter4.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Inter5";
+  src:
+    url("../public/assets/fonts/Inter5.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Inter6";
+  src:
+    url("../public/assets/fonts/Inter6.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Inter7";
+  src:
+    url("../public/assets/fonts/Inter7.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
