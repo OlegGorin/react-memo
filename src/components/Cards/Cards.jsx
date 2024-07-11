@@ -6,7 +6,9 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { useEasyMode } from "../../contexts/easyModeContext/UseEasyMode";
-// import { SelectLevelPage } from "../../pages/SelectLevelPage/SelectLevelPage";
+import { useUser } from "../../contexts/userContext/UseUser";
+import eyeIcon from "../../icons/eye.svg";
+import force2Icon from "../../icons/force2.svg";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -43,7 +45,12 @@ function getTimerValue(startDate, endDate) {
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
-  const { isEasyMode } = useEasyMode();
+  const [isLeader, setIsLeader] = useState(false);
+  // const [setError] = useState(null);
+  const { isEasyMode, selectedLevel } = useEasyMode();
+  // const { setLeaders } = useLeaders();
+  const { setUser } = useUser();
+  // Если игорок выбирает легкий уровень с 3 попытками, в attempts организован счетчик этих попыток
   const [attempts, setAttempts] = useState(isEasyMode ? 3 : 1);
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
@@ -71,6 +78,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameStartDate(startDate);
     setTimer(getTimerValue(startDate, null));
     setStatus(STATUS_IN_PROGRESS);
+    setIsLeader(false);
   }
   function resetGame() {
     setGameStartDate(null);
@@ -81,9 +89,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       setAttempts(3);
     }
   }
-  // function newGame() {
-  //   SelectLevelPage();
-  // }
 
   /**
    * Обработка основного действия в игре - открытие карты.
@@ -115,7 +120,13 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // Победа - все карты на поле открыты
     if (isPlayerWon) {
+      // Если выполняются условие: 3-й уровень сложности
+      // предоставляется возможность записи результата в лидерборд
+      if (selectedLevel === 9) {
+        setIsLeader(true);
+      }
       finishGame(STATUS_WON);
+      setUser("Пользователь");
       return;
     }
 
@@ -139,6 +150,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     if (playerLost) {
       if (!isEasyMode) {
         finishGame(STATUS_LOST);
+        setUser("Пользователь");
         return;
       } else {
         // Фунция закрытия карт
@@ -234,6 +246,12 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
+        <div>
+          <img src={eyeIcon} className={styles.achievement} alt="eye" />
+        </div>
+        <div>
+          <img src={force2Icon} className={styles.achievement} alt="force" />
+        </div>
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>
 
@@ -252,16 +270,16 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       {isEasyMode ? (
         <div className={styles.footerEasy}>
           <span className={styles.attempts}>Осталось попыток: {attempts}</span>
-          {/* <Button onClick={newGame}>Новая игра</Button> */}
         </div>
       ) : (
-        <div className={styles.footerCard}>{/* <Button onClick={newGame}>Новая игра</Button> */}</div>
+        <div className={styles.footerCard}></div>
       )}
 
       {isGameEnded ? (
         <div className={styles.modalContainer}>
           <EndGameModal
             isWon={status === STATUS_WON}
+            isLeader={isLeader}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}
             onClick={resetGame}
