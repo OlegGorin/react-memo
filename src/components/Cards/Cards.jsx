@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { generateDeck } from "../../utils/cards";
 import styles from "./Cards.module.css";
 import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
+import { AlohomoraModal } from "../../components/forcesModal/AlohomoraModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { useEasyMode } from "../../contexts/easyModeContext/UseEasyMode";
@@ -45,7 +46,16 @@ function getTimerValue(startDate, endDate) {
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [isLeader, setIsLeader] = useState(false);
-  const { isEasyMode, selectedLevel, setSelectedLevel, forceCards, setForceCards } = useEasyMode();
+  const {
+    isEasyMode,
+    selectedLevel,
+    setSelectedLevel,
+    forceCards,
+    setForceCards,
+    setForceEye,
+    isAlohomora,
+    setIsAlohomora,
+  } = useEasyMode();
   const { setUser } = useUser();
   // Если игорок выбирает легкий уровень с 3 попытками, в attempts организован счетчик этих попыток
   const [attempts, setAttempts] = useState(isEasyMode ? 3 : 1);
@@ -53,7 +63,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [cards, setCards] = useState([]);
   // Текущий статус игры
   const [status, setStatus] = useState(STATUS_PREVIEW);
-
   // Дата начала игры
   const [gameStartDate, setGameStartDate] = useState(null);
   // Дата конца игры
@@ -85,31 +94,45 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     if (isEasyMode) {
       setAttempts(3);
     }
+    setForceEye(1);
     setForceCards(2);
     setSelectedLevel(null);
   }
+  function onAlohomoraMouseEnter() {
+    if (!isGameEnded) {
+      setIsAlohomora(true);
+    }
+  }
+  function onAlohomoraMouseLeave() {
+    setIsAlohomora(false);
+  }
 
   const handleForceCards = () => {
-    const closedCards = cards.filter(card => !card.open);
-    const lenClosedCards = closedCards.length;
-    if (forceCards > 0 && lenClosedCards > 1) {
-      setForceCards(prev => prev - 1);
-      const randomIndex = Math.floor(Math.random() * (lenClosedCards - 1));
-      const candidate = closedCards[randomIndex];
-      const forcedCards = closedCards.filter(
-        closedCard => closedCard.rank === candidate.rank && closedCard.suit === candidate.suit,
-      );
-      for (let i = 0; i <= forcedCards.length - 1; i++) {
-        forcedCards[i].open = true;
-      }
-      if (lenClosedCards === 2) {
-        if (selectedLevel === 9) {
-          setIsLeader(true);
+    if (timer.seconds + timer.minutes > 0) {
+      const closedCards = cards.filter(card => !card.open);
+      const lenClosedCards = closedCards.length;
+      if (forceCards > 0 && lenClosedCards > 1) {
+        if (forceCards === 1) {
+          setIsAlohomora(false);
         }
-        finishGame(STATUS_WON);
+        setForceCards(prev => prev - 1);
+        const randomIndex = Math.floor(Math.random() * (lenClosedCards - 1));
+        const candidate = closedCards[randomIndex];
+        const forcedCards = closedCards.filter(
+          closedCard => closedCard.rank === candidate.rank && closedCard.suit === candidate.suit,
+        );
+        for (let i = 0; i <= forcedCards.length - 1; i++) {
+          forcedCards[i].open = true;
+        }
+        if (lenClosedCards === 2) {
+          if (selectedLevel === 9) {
+            setIsLeader(true);
+          }
+          finishGame(STATUS_WON);
+        }
+      } else if (forceCards > 0 && lenClosedCards === 1) {
+        alert("Неоткрытых карт должно быть не менее двух!");
       }
-    } else {
-      alert("Неоткрытых карт должно быть не менее двух!");
     }
   };
 
@@ -268,21 +291,15 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           )}
         </div>
         <div className={styles.forcesBox}>
-          <div className={styles.tooltip2}>
-            <span className={styles.tooltiptext2}>
-              <b>Алохомора</b>
-              {/* <br></br> */}
-              <br></br>
-              <p>
-                Открывается случайная пара<br></br> карт.
-              </p>
-            </span>
+          <div>
             {forceCards > 0 ? (
               <img
                 src={cardsIcon}
-                className={styles.forceCards}
+                className={`${!isGameEnded ? styles.forceCards : styles.forceCardsOff}`}
                 alt="cards"
                 onClick={handleForceCards}
+                onMouseEnter={onAlohomoraMouseEnter}
+                onMouseLeave={onAlohomoraMouseLeave}
                 disabled={forceCards === 0}
               />
             ) : (
@@ -294,8 +311,17 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                 disabled={forceCards === 0}
               />
             )}
-            <div className={styles.iconCards}></div>
-            <div className={styles.countCards}>{forceCards}</div>
+            {isGameEnded ? (
+              <>
+                <div className={`${forceCards > 0 ? styles.iconCardsEnd : styles.iconCardsOff}`}></div>
+                <div className={`${forceCards > 0 ? styles.countCardsEnd : styles.countCardsOff}`}>{forceCards}</div>
+              </>
+            ) : (
+              <>
+                <div className={`${forceCards > 0 ? styles.iconCards : styles.iconCardsEnd}`}></div>
+                <div className={`${forceCards > 0 ? styles.countCards : styles.countCardsEnd}`}>{forceCards}</div>
+              </>
+            )}
           </div>
         </div>
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
@@ -330,6 +356,12 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             gameDurationMinutes={timer.minutes}
             onClick={resetGame}
           />
+        </div>
+      ) : null}
+
+      {isAlohomora & (timer.seconds + timer.minutes > 0) ? (
+        <div className={styles.modalContainerAl}>
+          <AlohomoraModal />
         </div>
       ) : null}
     </div>

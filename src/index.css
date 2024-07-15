@@ -44,6 +44,78 @@ ol {
   font-style: normal;
 }
 @font-face {
+  font-family: "Poppins2";
+  src:
+    url("../public/assets/fonts/Poppins2.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PoppinsNC";
+  src:
+    url("../public/assets/fonts/PoppinsNC.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PoppinsNC1";
+  src:
+    url("../public/assets/fonts/PoppinsNC1.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PoppinsNC2";
+  src:
+    url("../public/assets/fonts/PoppinsNC2.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PoppinsNC3";
+  src:
+    url("../public/assets/fonts/PoppinsNC3.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PoppinsNC4";
+  src:
+    url("../public/assets/fonts/PoppinsNC4.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PoppinsNC5";
+  src:
+    url("../public/assets/fonts/PoppinsNC5.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PoppinsN";
+  src:
+    url("../public/assets/fonts/PoppinsN.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+}
+/* @font-face {
+  font-family: "PoppinsN2";
+  src:
+    url("../public/assets/fonts/PoppinsN2.woff2") format("woff2"),
+    local("sans-serif");
+  font-weight: 400;
+  font-style: normal;
+} */
+@font-face {
   font-family: "Montserrat1";
   src:
     url("../public/assets/fonts/Montserrat1.woff2") format("woff2"),

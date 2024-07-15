@@ -5,7 +5,9 @@ import { getLeaders } from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
 import achiev1 from "../../icons/achievement1.svg";
+import achiev1Non from "../../icons/achievement1Non.svg";
 import achiev2 from "../../icons/achievement2.svg";
+import achiev2Non from "../../icons/achievement2Non.svg";
 import { useEasyMode } from "../../contexts/easyModeContext/UseEasyMode";
 
 export const LeaderboardPage = () => {
@@ -85,19 +87,35 @@ export const LeaderboardPage = () => {
                   </div>
                   <div className={styles.blockAchiev}>
                     <div className={styles.boxAchievement}>
-                      <div className={styles.tooltip}>
+                      {/* <div className={styles.tooltip}>
                         <span className={styles.tooltiptext}>Игра пройдена в сложном режиме</span>
-                        {sortLeader.achievements.includes(1) && <img src={achiev1} alt="achiev1" />}
-                      </div>
+                        {sortLeader.achievements.includes(1) ? (
+                          <img src={achiev1} alt="achiev1" />
+                        ) : (
+                          <img src={achiev1Non} alt="achiev1Non" />
+                        )}
+                      </div> */}
+                      {sortLeader.achievements.includes(1) ? (
+                        <div className={styles.tooltip}>
+                          <span className={styles.tooltiptext}>Игра пройдена в сложном режиме</span>
+                          <img src={achiev1} alt="achiev1" />
+                        </div>
+                      ) : (
+                        <img src={achiev1Non} alt="achiev1Non" />
+                      )}
                     </div>
                     <div className={styles.spaceAchiv}></div>
                     <div className={styles.boxAchievement}>
-                      <div className={styles.tooltip2}>
-                        <span className={styles.tooltiptext2}>
-                          Игра пройдена<br></br>без супер-сил
-                        </span>
-                        {sortLeader.achievements.includes(2) && <img src={achiev2} alt="achiev2" />}
-                      </div>
+                      {sortLeader.achievements.includes(2) ? (
+                        <div className={styles.tooltip2}>
+                          <span className={styles.tooltiptext2}>
+                            Игра пройдена<br></br>без супер-сил
+                          </span>
+                          <img src={achiev2} alt="achiev2" />
+                        </div>
+                      ) : (
+                        <img src={achiev2Non} alt="achiev2Non" />
+                      )}
                     </div>
                   </div>
                   <span className={styles.emptySpace}></span>

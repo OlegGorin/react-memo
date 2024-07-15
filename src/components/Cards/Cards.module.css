@@ -99,56 +99,16 @@
   display: none;
 }
 
-.tooltip,
-.tooltip2 {
-  position: relative;
+.modalContainerAl {
   display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext,
-.tooltip2 .tooltiptext2 {
-  visibility: hidden;
-  width: 222px;
-  height: auto;
-  background-color: #C2F5FF;
-  color: #004980;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: Inter2;
-  line-height: 24px;
-  text-align: center;
-  border-radius: 12px;
-  padding: 10px 0;
-
-  /* Разместите всплывающую подсказку */
   position: absolute;
-  top: 80px;
-  left: -80px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  background: #004980c0;
   z-index: 1;
-}
-
-.tooltip2 .tooltiptext2 {
-  width: 187px;
-  left: -60px;
-}
-
-.tooltip:hover .tooltiptext,
-.tooltip2:hover .tooltiptext2 {
-  visibility: visible;
-  cursor: pointer;
-}
-
-.tooltip .tooltiptext::after,
-.tooltip2 .tooltiptext2::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent #C2F5FF transparent;
 }
 
 .forcesBox {
@@ -156,13 +116,14 @@
   height: 68px;
   display: flex;
   flex-direction: row;
-  gap: 5px
-  ;
+  gap: 5px;
 }
 
 .forceEye,
 .forceCards {
+  position: absolute;
   opacity: 1.0;
+  z-index: 2;
 }
 .forceEyeOff,
 .forceCardsOff {
@@ -181,6 +142,7 @@
   top: 40px;
   left: 45px;
   border-radius: 50%;
+  z-index: 2;
 }
 
 .iconEye {
@@ -189,7 +151,7 @@
 
 .countEye {
   color: #fff;
-  position: absolute;
+  position: relative;
   top: 45px;
   left: 54px;
   font-family: StratosSkyeng;
@@ -197,30 +159,61 @@
   font-style: normal;
   font-weight: 500;
   line-height: 14px;
+  z-index: 2;
 }
 
 .countEye {
   display: none;
 }
 
-.iconCards {
+.iconCards,
+.iconCardsOff,
+.iconCardsEnd {
   background-color: rgba(223, 120, 25, 1.0);
   height: 25px;
   width: 25px;
   position: relative;
-  top: -34px;
+  top: 40px;
   left: 45px;
   border-radius: 50%;
+  z-index: 2;
+  opacity: 1.0;
 }
 
-.countCards {
+.iconCardsEnd {
+  top: -34px;
+  opacity: 0.4;
+}
+
+.countCards,
+.countCardsOff,
+.countCardsEnd {
   color: #fff;
   position: relative;
-  top: -53px;
+  top: 20px;
   left: 54px;
   font-family: StratosSkyeng;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 14px;
+  z-index: 2;
+  opacity: 1.0;
+}
+
+.countCardsEnd {
+  top: -54px;
+  opacity: 0.4;
+}
+
+.iconCardsOff {
+  top: -34px;
+  left: 50px;
+  opacity: 0.4;
+}
+
+.countCardsOff {
+  top: -52px;
+  left: 58px;
+  opacity: 0.4;
 }

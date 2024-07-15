@@ -48,15 +48,15 @@
   align-items: center;
   padding-top: 16px;
   margin-left: 20px;
- }
+}
 
- .boxTitle {
+.boxTitle {
   gap: 66px;
- }
+}
 
- .boxContent {
+.boxContent {
   color: #000;
- }
+}
 
 .tableHeader,
 .tableBody {
@@ -74,7 +74,7 @@
 .userName,
 .userTime,
 .userAchievements {
-  font-family: Montserrat1;
+  font-family: Montserrat1, PoppinsNC3;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
@@ -144,7 +144,6 @@
 .tooltip2 {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black;
 }
 
 .tooltip .tooltiptext,
@@ -152,7 +151,7 @@
   visibility: hidden;
   width: 212px;
   height: auto;
-  background-color: #C2F5FF;
+  background-color: #c2f5ff;
   color: #004980;
   font-size: 18px;
   font-weight: 400;
@@ -161,8 +160,6 @@
   text-align: center;
   border-radius: 12px;
   padding: 10px 0;
-
-  /* Разместите всплывающую подсказку */
   position: absolute;
   bottom: 40px;
   z-index: 1;
@@ -175,6 +172,12 @@
 .tooltip:hover .tooltiptext,
 .tooltip2:hover .tooltiptext2 {
   visibility: visible;
+  /* -webkit-filter: brightness(70%);
+  -webkit-transition: all 2s ease;
+  -moz-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  -ms-transition: all 2s ease;
+  transition: all 2s ease; */
 }
 
 .tooltip .tooltiptext::after,
@@ -186,5 +189,5 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: #C2F5FF transparent transparent transparent;
+  border-color: #c2f5ff transparent transparent transparent;
 }

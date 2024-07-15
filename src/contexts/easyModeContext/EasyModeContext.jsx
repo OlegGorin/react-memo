@@ -7,6 +7,7 @@ export const EasyModeProvider = ({ children }) => {
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [forceEye, setForceEye] = useState(true);
   const [forceCards, setForceCards] = useState(2);
+  const [isAlohomora, setIsAlohomora] = useState(false);
   return (
     <EasyModeContext.Provider
       value={{
@@ -18,6 +19,8 @@ export const EasyModeProvider = ({ children }) => {
         setForceEye,
         forceCards,
         setForceCards,
+        isAlohomora,
+        setIsAlohomora,
       }}
     >
       {children}

@@ -1,0 +1,21 @@
+.alohomora,
+.alohomoraPrev {
+  position: relative;
+  left: 820px;
+  top: 130px;
+  width: 212px;
+  height: 100px;
+  background-color: #c2f5ff;
+  color: #004980;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: Inter2;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 12px;
+  padding: 10px 0;
+}
+
+.alohomoraPrev {
+  left: 1080px;
+}
