@@ -45,17 +45,8 @@ function getTimerValue(startDate, endDate) {
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
-  const [isLeader, setIsLeader] = useState(false);
-  const {
-    isEasyMode,
-    selectedLevel,
-    setSelectedLevel,
-    forceCards,
-    setForceCards,
-    setForceEye,
-    isAlohomora,
-    setIsAlohomora,
-  } = useEasyMode();
+  const [isLeader, setIsLeader] = useState(true);
+  const { isEasyMode, forceCards, setForceCards, setForceEye, isAlohomora, setIsAlohomora } = useEasyMode();
   const { setUser } = useUser();
   // Если игорок выбирает легкий уровень с 3 попытками, в attempts организован счетчик этих попыток
   const [attempts, setAttempts] = useState(isEasyMode ? 3 : 1);
@@ -84,7 +75,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameStartDate(startDate);
     setTimer(getTimerValue(startDate, null));
     setStatus(STATUS_IN_PROGRESS);
-    setIsLeader(false);
   }
   function resetGame() {
     setGameStartDate(null);
@@ -96,7 +86,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     }
     setForceEye(1);
     setForceCards(2);
-    setSelectedLevel(null);
   }
   function onAlohomoraMouseEnter() {
     if (!isGameEnded) {
@@ -125,8 +114,10 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           forcedCards[i].open = true;
         }
         if (lenClosedCards === 2) {
-          if (selectedLevel === 9) {
+          if (pairsCount === 9) {
             setIsLeader(true);
+          } else {
+            setIsLeader(false);
           }
           finishGame(STATUS_WON);
         }
@@ -166,8 +157,10 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // Победа - все карты на поле открыты
     if (isPlayerWon) {
-      if (selectedLevel === 9) {
+      if (pairsCount === 9) {
         setIsLeader(true);
+      } else {
+        setIsLeader(false);
       }
       setTimeout(finishGame(STATUS_WON), 1000);
       setUser("Пользователь");
@@ -192,6 +185,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
     if (playerLost) {
+      setIsLeader(false);
       if (!isEasyMode) {
         finishGame(STATUS_LOST);
         setUser("Пользователь");
@@ -216,6 +210,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         if (attempts === 0) {
           finishGame(STATUS_LOST);
           setAttempts(3);
+          setIsLeader(true);
           return;
         }
       }
@@ -361,7 +356,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
       {isAlohomora & (timer.seconds + timer.minutes > 0) ? (
         <div className={styles.modalContainerAl}>
-          <AlohomoraModal />
+          <AlohomoraModal pairsCount={pairsCount} />
         </div>
       ) : null}
     </div>

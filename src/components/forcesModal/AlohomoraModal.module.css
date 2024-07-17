@@ -1,21 +1,26 @@
-.alohomora,
-.alohomoraPrev {
+.alohomora3,
+.alohomora6,
+.alohomora9 {
   position: relative;
-  left: 820px;
-  top: 130px;
+  left: 130px;
+  top: -185px;
   width: 212px;
-  height: 100px;
+  height: auto;
   background-color: #c2f5ff;
   color: #004980;
   font-size: 18px;
   font-weight: 400;
-  font-family: Inter2;
+  font-family: Inter;
   line-height: 24px;
   text-align: center;
   border-radius: 12px;
-  padding: 10px 0;
+  padding: 20px 0;
 }
 
-.alohomoraPrev {
-  left: 1080px;
+.alohomora6 {
+  top: -325px;
+}
+
+.alohomora9 {
+  top: -470px;
 }
