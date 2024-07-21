@@ -87,14 +87,6 @@ export const LeaderboardPage = () => {
                   </div>
                   <div className={styles.blockAchiev}>
                     <div className={styles.boxAchievement}>
-                      {/* <div className={styles.tooltip}>
-                        <span className={styles.tooltiptext}>Игра пройдена в сложном режиме</span>
-                        {sortLeader.achievements.includes(1) ? (
-                          <img src={achiev1} alt="achiev1" />
-                        ) : (
-                          <img src={achiev1Non} alt="achiev1Non" />
-                        )}
-                      </div> */}
                       {sortLeader.achievements.includes(1) ? (
                         <div className={styles.tooltip}>
                           <span className={styles.tooltiptext}>Игра пройдена в сложном режиме</span>

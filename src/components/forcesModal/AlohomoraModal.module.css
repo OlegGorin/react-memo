@@ -1,11 +1,10 @@
-.alohomora3,
-.alohomora6,
-.alohomora9 {
+.alohomora {
   position: relative;
-  left: 130px;
-  top: -185px;
+  left: -80px;
+  top: -330px;
   width: 212px;
   height: auto;
+  height: 90px;
   background-color: #c2f5ff;
   color: #004980;
   font-size: 18px;
@@ -15,12 +14,5 @@
   text-align: center;
   border-radius: 12px;
   padding: 20px 0;
-}
-
-.alohomora6 {
-  top: -325px;
-}
-
-.alohomora9 {
-  top: -470px;
+  z-index: -1;
 }

@@ -14,7 +14,7 @@ export function EndGameModal({ isWon, isLeader, gameDurationSeconds, gameDuratio
   const { user, setUser } = useUser();
   const [setError] = useState(null);
   const [stateBtn, setStateBtn] = useState(true);
-  const { isEasyMode, forceEye, forceCards } = useEasyMode();
+  const { isEasyMode, forceCards } = useEasyMode();
 
   const title = isWon ? (isLeader ? "Вы попали на Лидерборд!" : "Вы победили!") : "Вы проиграли!";
 
@@ -35,17 +35,12 @@ export function EndGameModal({ isWon, isLeader, gameDurationSeconds, gameDuratio
       const timeUser = gameDurationMinutes * 60 + gameDurationSeconds;
       const achievements = [];
       if (!isEasyMode) {
-        if (forceEye === 1) {
-          achievements.push(1);
-        }
-        if (forceCards === 2) {
-          achievements.push(2);
-        }
-      } else {
-        if (forceCards === 2) {
-          achievements.push(2);
-        }
+        achievements.push(1);
       }
+      if (forceCards === 2) {
+        achievements.push(2);
+      }
+
       try {
         return postLeader({ user, timeUser, achievements });
       } catch (error) {

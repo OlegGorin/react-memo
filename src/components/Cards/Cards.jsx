@@ -45,7 +45,7 @@ function getTimerValue(startDate, endDate) {
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
-  const [isLeader, setIsLeader] = useState(true);
+  const [isLeader, setIsLeader] = useState(false);
   const { isEasyMode, forceCards, setForceCards, setForceEye, isAlohomora, setIsAlohomora } = useEasyMode();
   const { setUser } = useUser();
   // Если игорок выбирает легкий уровень с 3 попытками, в attempts организован счетчик этих попыток
@@ -116,8 +116,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         if (lenClosedCards === 2) {
           if (pairsCount === 9) {
             setIsLeader(true);
-          } else {
-            setIsLeader(false);
           }
           finishGame(STATUS_WON);
         }
@@ -159,8 +157,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     if (isPlayerWon) {
       if (pairsCount === 9) {
         setIsLeader(true);
-      } else {
-        setIsLeader(false);
       }
       setTimeout(finishGame(STATUS_WON), 1000);
       setUser("Пользователь");
@@ -356,7 +352,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
       {isAlohomora & (timer.seconds + timer.minutes > 0) ? (
         <div className={styles.modalContainerAl}>
-          <AlohomoraModal pairsCount={pairsCount} />
+          <AlohomoraModal />
         </div>
       ) : null}
     </div>
