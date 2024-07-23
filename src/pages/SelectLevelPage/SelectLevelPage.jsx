@@ -4,11 +4,11 @@ import { Button } from "../../components/Button/Button";
 import { useEasyMode } from "../../contexts/easyModeContext/UseEasyMode";
 
 export function SelectLevelPage() {
-  const { isEasyMode, setIsEasyMode, selectedLevel, setSelectedLevel } = useEasyMode();
+  const { isEasyMode, setIsEasy, selectedLevel, setSelectedLevel, clearIsEasy } = useEasyMode();
   const navigate = useNavigate();
 
   const handleEasyModeChange = event => {
-    setIsEasyMode(event.target.checked);
+    setIsEasy(event.target.checked);
   };
 
   const arrLevel = [3, 6, 9];
@@ -18,6 +18,9 @@ export function SelectLevelPage() {
   };
 
   const handleStartClick = () => {
+    if (!isEasyMode) {
+      clearIsEasy();
+    }
     if (selectedLevel !== null) {
       navigate(`/game/${selectedLevel}`);
     } else {

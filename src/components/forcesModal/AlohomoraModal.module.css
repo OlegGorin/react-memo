@@ -1,0 +1,18 @@
+.alohomora {
+  position: relative;
+  left: -80px;
+  top: -330px;
+  width: 212px;
+  height: auto;
+  height: 90px;
+  background-color: #c2f5ff;
+  color: #004980;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: Inter;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 12px;
+  padding: 20px 0;
+  z-index: -1;
+}

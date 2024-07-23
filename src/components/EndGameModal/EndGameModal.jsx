@@ -1,6 +1,7 @@
 import styles from "./EndGameModal.module.css";
 import { Link } from "react-router-dom";
 import { useUser } from "../../contexts/userContext/UseUser";
+import { useEasyMode } from "../../contexts/easyModeContext/UseEasyMode";
 
 import { Button } from "../Button/Button";
 
@@ -13,6 +14,7 @@ export function EndGameModal({ isWon, isLeader, gameDurationSeconds, gameDuratio
   const { user, setUser } = useUser();
   const [setError] = useState(null);
   const [stateBtn, setStateBtn] = useState(true);
+  const { isEasyMode, forceCards } = useEasyMode();
 
   const title = isWon ? (isLeader ? "Вы попали на Лидерборд!" : "Вы победили!") : "Вы проиграли!";
 
@@ -31,8 +33,16 @@ export function EndGameModal({ isWon, isLeader, gameDurationSeconds, gameDuratio
       setStateBtn(prev => !prev);
 
       const timeUser = gameDurationMinutes * 60 + gameDurationSeconds;
+      const achievements = [];
+      if (!isEasyMode) {
+        achievements.push(1);
+      }
+      if (forceCards === 2) {
+        achievements.push(2);
+      }
+
       try {
-        return postLeader({ user, timeUser });
+        return postLeader({ user, timeUser, achievements });
       } catch (error) {
         console.error(error.message);
         if (error.message === "Failed to fetch") {
